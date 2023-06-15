@@ -14,7 +14,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,8 +77,19 @@ public class MainActivity extends AppCompatActivity implements Asynchtask {
     public void processFinish(String result) throws
             JSONException {
         //txtSaludo.setText("Resp: " + result );
-         txtS = (TextView)findViewById(R.id.txtHolla);
-        txtS.setText(result);
+         //txtS = (TextView)findViewById(R.id.txtHolla);
+        //txtS.setText(result);
+
+
+        //Parsear un JSON
+        String lstBancos="";
+        JSONArray JSONlista = new JSONArray(result);
+        for(int i=0; i< JSONlista.length();i++){
+            JSONObject banco= JSONlista.getJSONObject(i);
+            lstBancos = lstBancos + "\n" +
+                    banco.getString("name").toString();
+        }
+        txtS.setText("Respuesta WS Lista de Bancos" + lstBancos);
     }
     public void Enviar(View view){
         //Se crea una instancia de la actividad que se quiere abrir
